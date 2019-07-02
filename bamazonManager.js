@@ -55,34 +55,39 @@ function addItem(){
             type: "input",
             name: "item",
             message: "Please enter a product name: "
-        }
-    ])
-    .then(function (answer) {});
-    inquirer.prompt([
+        },
         {
             type: "list",
             name: "department",
             message: "Select a department",
             choice: ["Electronics", "Games", "Furniture"]
-        }
-    ])
-    .then(function (answer) {});
-    inquirer.prompt([
+        },
         {
             type: "input",
             name: "price",
             message: "Enter the price"
-        }
-    ])
-    .then(function (answer) {});
-    inquirer.prompt([
+        },
         {
             type: "input",
             name: "quantity",
             message: "Enter the quantity"
-        }
+        },
     ])
-    .then(function (answer) {});
+    .then(function (answer) {
+        var query = connection.query(
+            "INSERT INTO bamazon SET ?",
+            {
+                item: answer.item,
+                department: answer.department,
+                price: answer.price,
+                quantity: answer.quantity
+            },
+            function(error, res){
+                if (error) throw error;
+                console.log(res.affectedRows + "Item inserted!\n");
+            }
+        )
+    });
 };
 
 function exitProgram(){
