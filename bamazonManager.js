@@ -77,10 +77,10 @@ function addItem(){
         var query = connection.query(
             "INSERT INTO bamazon SET ?",
             {
-                item: answer.item,
-                department: answer.department,
+                product_name: answer.item,
+                department_name: answer.department,
                 price: answer.price,
-                quantity: answer.quantity
+                stock_quantity: answer.quantity
             },
             function(error, res){
                 if (error) throw error;
