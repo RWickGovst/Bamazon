@@ -85,6 +85,8 @@ function addItem(){
             function(error, res){
                 if (error) throw error;
                 console.log(res.affectedRows + "Item inserted!\n");
+                displayInventory();
+                displayMenu();
             }
         )
     });
