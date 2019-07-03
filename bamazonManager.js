@@ -15,6 +15,7 @@ connection.connect(function(error){
     console.log("\n\tconnected as id " + connection.threadId + "\n");
     displayInventory();
 });
+
 // display the menu
 function displayMenu(){
     inquirer.prompt({
@@ -153,3 +154,4 @@ function exitProgram(){
     process.exit(0);
 };
 
+// module.exports = bamazonManager;
