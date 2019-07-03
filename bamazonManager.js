@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var WordTable = require('word-table');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -12,19 +13,17 @@ var connection = mysql.createConnection({
 });
 connection.connect(function(error){
     if (error) throw error;
-    console.log("connected as id " + connection.threadId + "\n");
-    // readData();
+    console.log("\n\tconnected as id " + connection.threadId + "\n");
+    displayInventory();
 });
-
+// display the menu
 function displayMenu(){
-    
-    inquirer
-  .prompt({
+    inquirer.prompt({
     /* Pass your questions in here */
     
     type: "list",
     name: "choice",
-    message: "What would you like to do?\n",
+    message: "\n\tWhat would you like to do?\n",
     choices: ["Buy an item", "Add an item into inventory", "Exit"]
     
     })
@@ -41,13 +40,41 @@ function displayMenu(){
     }
     });
 };
-displayInventory();
-displayMenu();
-
+// function to purchase an item
 function buyItem(){
-
+    displayInventory();
+    console.log("\n\tWelcome to Bamazon\n");
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "item",
+            message: "Please choose the product by the ID number: "
+        },
+        {
+            type: "list",
+            name: "quantity",
+            message: "How many?",
+            choices: ['1','2','3','4','5']
+        },
+    ])
+    .then(function(answer){
+        var query = connection.query(
+            "SELECT FROM bamazon",
+            {
+                
+            },
+            function(error, res){
+                if (error) throw error;
+                console.log(res.affectedRows + "\nItem Purchased!\n");
+                // update data
+                // qty = qty - number purchased
+                displayInventory();
+                displayMenu();
+            }
+        )
+    })
 };
-
+// function to add an item to inventory
 function addItem(){
     console.log("Please enter the product\n");
     inquirer.prompt([
@@ -60,7 +87,7 @@ function addItem(){
             type: "list",
             name: "department",
             message: "Select a department",
-            choice: ["Electronics", "Games", "Furniture"]
+            choices: ["Electronics", "Games", "Furniture"]
         },
         {
             type: "input",
@@ -91,17 +118,39 @@ function addItem(){
         )
     });
 };
+// display inventory
+function displayInventory(){
+    connection.query("SELECT * FROM bamazon"
+    , function(err, res) {
+        if (err) throw err;
 
+        console.log("\nID\tProduct\tDepartment\tPrice\tQuantity")
+        console.log("==============================================");
+        // if (res[i].department_name === "Games"){
+        for(var i = 0; i < res.length; i++){
+            if (res[i].department_name === "Games"){
+            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+            }
+        }
+        for(var i = 0; i < res.length; i++){
+            if (res[i].department_name === "Electronics"){
+            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+            }
+        }
+        for(var i = 0; i < res.length; i++){
+            if (res[i].department_name === "Furniture"){
+            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+            }
+        }
+        
+        // console.log(res);
+        displayMenu();
+    }) 
+};
+// exit program
 function exitProgram(){
-    console.log("Closing Connection");
+    console.log("\n\tClosing Connection");
     connection.end();
     process.exit(0);
 };
 
-function displayInventory(){
-    connection.query("SELECT * FROM bamazon")
-    , function(err, res) {
-        if (err) throw err;
-        console.log(res);
-    } 
-};
