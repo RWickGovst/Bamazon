@@ -118,35 +118,7 @@ function addItem(){
         )
     });
 };
-// display inventory
-function displayInventory(){
-    connection.query("SELECT * FROM bamazon"
-    , function(err, res) {
-        if (err) throw err;
-        // var header = ['ID', 'Product', 'Department', 'Price', 'Quantity'];
-        // var body = 
-        // console.log("\nID\tProduct\tDepartment\tPrice\tQuantity")
-        console.log("==============================================");
-        
-        for(var i = 0; i < res.length; i++){
-            if (res[i].department_name === "Games"){
-            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
-            }
-        }
-        for(var i = 0; i < res.length; i++){
-            if (res[i].department_name === "Electronics"){
-            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
-            }
-        }
-        for(var i = 0; i < res.length; i++){
-            if (res[i].department_name === "Furniture"){
-            console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
-            }
-        }
-        // console.log(res);
-        displayMenu();
-    }) 
-};
+
 // exit program
 function exitProgram(){
     console.log("\n\tClosing Connection");
