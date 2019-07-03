@@ -1,6 +1,5 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var WordTable = require('word-table');
 
 var connection = mysql.createConnection({
     host: "localhost",
@@ -123,10 +122,11 @@ function displayInventory(){
     connection.query("SELECT * FROM bamazon"
     , function(err, res) {
         if (err) throw err;
-
-        console.log("\nID\tProduct\tDepartment\tPrice\tQuantity")
+        // var header = ['ID', 'Product', 'Department', 'Price', 'Quantity'];
+        // var body = 
+        // console.log("\nID\tProduct\tDepartment\tPrice\tQuantity")
         console.log("==============================================");
-        // if (res[i].department_name === "Games"){
+        
         for(var i = 0; i < res.length; i++){
             if (res[i].department_name === "Games"){
             console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
@@ -142,7 +142,6 @@ function displayInventory(){
             console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
             }
         }
-        
         // console.log(res);
         displayMenu();
     }) 
