@@ -22,22 +22,22 @@ function displayInventory() {
             if (err) throw err;
             // var header = ['ID', 'Product', 'Department', 'Price', 'Quantity'];
             // var body = 
-            console.log("\nID\tProduct\tDepartment\tPrice\tQuantity")
-            console.log("==============================================");
+            console.log("\nID\tProduct     \tDepartment\t  Price\t     Quantity")
+            console.log("===========================================================");
 
             for (var i = 0; i < res.length; i++) {
                 if (res[i].department_name === "Games") {
-                    console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+                    console.log(res[i].id + "\t" + res[i].product_name + "     \t" + res[i].department_name + "\t\t  " + res[i].price + "    \t" + res[i].stock_quantity)
                 }
             }
             for (var i = 0; i < res.length; i++) {
                 if (res[i].department_name === "Electronics") {
-                    console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+                    console.log(res[i].id + "\t" + res[i].product_name + "     \t" + res[i].department_name + "\t  " + res[i].price + "    \t" + res[i].stock_quantity)
                 }
             }
             for (var i = 0; i < res.length; i++) {
                 if (res[i].department_name === "Furniture") {
-                    console.log(res[i].id + "\t" + res[i].product_name + "\t" + res[i].department_name + "\t\t" + res[i].price + "\t" + res[i].stock_quantity)
+                    console.log(res[i].id + "\t" + res[i].product_name + "     \t" + res[i].department_name + "\t  " + res[i].price + "    \t" + res[i].stock_quantity)
                 }
             }
             // console.log(res);
@@ -87,7 +87,7 @@ function promptForQuantity(product) {
         var cost = (parseInt(product.price) * quantity);
 
         console.log("The total for your purchase is $" + cost);
-        if (quantity < product.stock_quantity) {
+        if (quantity <= product.stock_quantity) {
             makePurchase(product, quantity);
         } else {
             console.log("insufficient quantity");
