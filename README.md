@@ -5,6 +5,8 @@
 
 #### In the storefront, a customer selects an item using the item number
 
+##### As of now the main.js is inoperative, the customer and manger sides can be run independantly
+
 
 ### Node Interface
 ![Program Feature](./assets/buy01.png)
